@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyser</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f6fa;
+            --text-color: #2c3e50;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .upload-section {
+            border: 2px dashed #bdc3c7;
+            padding: 30px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            transition: border-color 0.3s ease;
+        }
+
+        .upload-section:hover {
+            border-color: var(--primary-color);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        .result-section {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .result-section h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        pre {
+            white-space: pre-wrap;
+            font-family: inherit;
+            background: transparent;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>AI Resume Analyser</h1>
+
+        <div class="upload-section">
+            <form action="/" method="post" enctype="multipart/form-data">
+                <div>
+                    <label for="resume">Upload Resume (PDF only):</label>
+                    <input type="file" name="resume" id="resume" accept=".pdf" required>
+                </div>
+
+                <div>
+                    <label for="job_description">Job Description (Optional):</label>
+                    <textarea name="job_description" id="job_description"
+                        placeholder="Paste the job description here to get a tailored analysis..."></textarea>
+                </div>
+                <div>
+                    <label for="api_key">Google API Key (Optional):</label>
+                    <input type="password" name="api_key" id="api_key"
+                        placeholder="Enter your Google API Key if not set in .env">
+                </div>
+
+                <button type="submit">Analyze Resume</button>
+            </form>
+        </div>
+
+        {% if result %}
+        <div class="result-section">
+            <h2>Analysis Result</h2>
+            <!-- Safely render newlines -->
+            <div class="analysis-content">
+                {{ result | replace('\n', '<br>') | safe }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
