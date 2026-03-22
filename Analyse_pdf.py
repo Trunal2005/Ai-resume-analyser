@@ -53,7 +53,7 @@ def analyze_resume(resume_text, job_description=None, api_key=None):
     elif not os.getenv("GOOGLE_API_KEY"):
         return "Error: Google API Key is missing. Please provide it in the form or configure it in the .env file."
 
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-flash')
 
     prompt = f"""
     You are an expert HR and Resume Analyser.
